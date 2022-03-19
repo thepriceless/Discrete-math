@@ -21,7 +21,8 @@ int main() {
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-            dist[i][j] = 0;
+            if (i != j) { dist[i][j] = 100000; }
+            else { dist[i][j] = 0; }
         }
     }
     for (int i = 0; i < 194; i++) {
@@ -58,3 +59,4 @@ int main() {
             c.insert(i);
         }
     }
+}

@@ -32,10 +32,10 @@ public:
 	}
 };
 
-//int main() {
-//	Square_Root test(1);
-//	for (int i = 1; i < 200; ++i) {
-//		test.K = i;
-//		test.Recurrence();
-//	}
-//}
+int main() {
+	Square_Root test(1);
+	for (int i = 1; i < 200; ++i) {
+		test.K = i;
+		test.Recurrence();
+	}
+}

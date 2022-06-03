@@ -1,41 +1,53 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include <climits>
+#include <cmath>
 
 class Square_Root {
 public:
-	int K;
-	std::vector<long double> Sequence;
+	long long seq0;
+	long long seq1;
+	long long seq2;
 
+	int K;
 
 	Square_Root(int k) {
 		K = k;
-		Sequence.resize(1000);
-		Sequence[0] = 2;
-		Sequence[1] = 2;
 	}
 
 	void Recurrence() {
-		const long double LIMIT = LDBL_MAX / 100;
+		const long long LIMIT = LLONG_MAX / 1000;
 		--K;
-		Sequence[2] = 2 * Sequence[1] + K * Sequence[0];
 		int i = 2;
-		while (abs((Sequence[i] / Sequence[i - 1]) - (Sequence[i - 1] / Sequence[i - 2])) > 0.00001 && Sequence[i] < LIMIT) {
+		seq2 = 2 * seq1 + K * seq0;
+		while (true) {
+			seq0 = seq1;
+			seq1 = seq2;
+
 			++i;
-			Sequence[i] = 2 * Sequence[i - 1] + K * Sequence[i - 2];
-			//std::cout << Sequence[i] << '\n';
-			//std::cout << "seq: " << std::setprecision(8) << Sequence[i] / Sequence[i - 1] - 1 << '\n';
-			//std::cout << "dif: " << std::setprecision(8) << (Sequence[i] / Sequence[i - 1]) - (Sequence[i - 1] / Sequence[i - 2]) << '\n';
+			seq2 = 2 * seq1 + K * seq0;
+			if (seq2 > LIMIT) {
+				seq1 /= 100;
+				seq2 /= 100;
+			}
+
+			if (abs(static_cast<long double>(seq2) / static_cast<long double>(seq1) - static_cast<long double>(seq1) / static_cast<long double>(seq0)) < 0.0001) { break; }
 		}
-		//std::cout << std::setprecision(6) << (Sequence[i]) / (Sequence[i - 1]) - 1 << '\n';
 		++K;
 	}
 };
 
 int main() {
 	Square_Root test(1);
-	for (int i = 1; i < 200; ++i) {
-		test.K = i;
-		test.Recurrence();
+	for (int att = 0; att < 1000; ++att) {
+		for (long long i = 1; i < 1000; ++i) {
+			test.K = i;
+			test.seq0 = 2;
+			test.seq1 = 2;
+			test.Recurrence();
+		}
 	}
+	return 0;
 }
+
